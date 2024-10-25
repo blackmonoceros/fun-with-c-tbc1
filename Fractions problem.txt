@@ -1,0 +1,104 @@
+#include <iostream>
+
+using namespace std;
+
+class Ulamek {
+private:
+    int Licznik;
+    int Mianownik;
+
+public:
+
+    Ulamek(int licznik =0, int mianownik=1):
+        Licznik(licznik), Mianownik(mianownik){}
+
+    Ulamek operator*(const Ulamek& u) {
+        return Ulamek(Licznik * u.Licznik, Mianownik*u.Mianownik);
+    }
+
+    Ulamek operator-(const Ulamek& u) {
+        return Ulamek(Licznik * u.Mianownik-u.Licznik*Mianownik, Mianownik*u.Mianownik);
+    }
+
+    Ulamek operator+(const Ulamek& u) {
+        return Ulamek(Licznik*u.Mianownik+u.Licznik*Mianownik, Mianownik*u.Mianownik);
+    }
+
+    Ulamek& operator*=(const Ulamek&u){
+        *this = *this*u;
+        return*this;
+    }
+
+    Ulamek& operator-=(const Ulamek&u){
+        *this =*this-u;
+        return*this;
+    }
+
+    Ulamek& operator+=(const Ulamek& u){
+        *this = *this + u;
+        return *this;
+    }
+
+    Ulamek& operator--(){
+        Licznik--;
+        return *this;
+    }
+
+    Ulamek&operator++(){
+        Licznik++;
+        return *this;
+    }
+    bool operator>(const Ulamek&u){
+        return (Licznik*u.Mianownik)>(u.Licznik*Mianownik);
+
+    }
+    bool operator==(const Ulamek& u){
+        return (Licznik*u.Mianownik) == (u.Licznik*Mianownik);
+
+    }
+    bool operator<(const Ulamek&u){
+        return (Licznik * u.Mianownik) < (u.Licznik * Mianownik);
+
+    }
+
+    friend ostream& operator<<(ostream& out, const Ulamek& u) {
+        out <<u.Licznik <<"/"<<u.Mianownik;
+        return out;
+    }
+};
+
+int main(){
+    Ulamek a1(1, 2);
+    Ulamek a2(3, 4);
+    Ulamek a3 =a1*a2;
+
+    cout << "a1*a2 = " << a3 <<endl;
+    Ulamek a4=a1+a2;
+
+    cout << "a1+a2 = " << a4 <<endl;
+    Ulamek a5 = a1-a2;
+
+    cout << "a1-a2 = " << a5 <<endl;
+    a1*= a2;
+
+    cout << "a1 po przeciazeniu*= a2 = " << a1 <<endl;
+    ++a1;
+
+    cout << "a1 po przeciazeniu++ = " << a1 <<endl;
+    --a2;
+
+    cout << "a2 po przeciazeniu-- = " << a2 <<endl;
+
+    if (a1 > a2) {
+        cout << "a1>a2" <<endl;
+    } else {
+        cout << "a1<=a2" <<endl;
+    }
+
+    if (a1 == a2) {
+        cout << "a1==a2" <<endl;
+    } else {
+        cout << "a1!=a2" <<endl;
+    }
+return 0;
+}
